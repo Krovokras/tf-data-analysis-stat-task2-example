@@ -1,15 +1,24 @@
+
 import pandas as pd
 import numpy as np
 from scipy.stats import norm
 
-chat_id = 1134491798
+chatid = 1134491798
 
 def solution(p: float, x: np.array) -> tuple:
+    a, b = 0.068, 6
+    n = len(x)
+    sumx = np.sum(x)
+    sumxsq = np.sum(x  x)
 
-alpha = 1 - p
-loc = x.mean()
-scale = np.sqrt(np.var(x))/np.sqrt(len(x))
-
-left_quantile = loc - scale * norm.ppf(1 - alpha / 2)
-right_quantile = loc - scale * norm.ppf(alpha / 2)
-return left_quantile, right_quantile
+    
+    b_hat = (n  (sumx - n * 0.068) - sumxsq + 0.068 * n * (n + 1)) / (n * (n - 1) / 2)
+    
+    
+    seb = np.sqrt((b - a)  2 / 12 / n / (n + 1)  (2  n + 1))
+    
+    
+    z = norm.ppf(1 - (1 - p) / 2)
+    ci = (bhat - z * seb, bhat + z * seb)
+    
+    return ci
